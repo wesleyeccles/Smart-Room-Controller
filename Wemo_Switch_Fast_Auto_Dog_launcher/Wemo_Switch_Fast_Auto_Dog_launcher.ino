@@ -71,7 +71,29 @@ int   hueRedGreenBlue[]= {HueRed , HueRed, HueYellow,HueGreen,HueGreen};
   unsigned int timerStart;
   bool fanIsRunning;
 
+//OLED
 
+#define LOGO_HEIGHT   16
+#define LOGO_WIDTH    16
+static const unsigned char PROGMEM logo_bmp[] =
+{ B00000100, B00010000,
+  B00000100, B00010000,
+  B01000100, B10010001,
+  B01000101, B01010001,
+  B01000010, B00100001,
+  B01000100, B00010001,
+  B01001000, B00001001,
+  B01010000, B00000101,
+  B00100000, B00000010,
+  B01000000, B00000001,
+  B00100000, B00000010,
+  B00010000, B00000100,
+  B00001000, B00001000,
+  B00000100, B00010000,
+  B00000010, B00100000,
+  B00000001, B10000000, };
+
+  
   
 void setup() {
   Serial.begin(9600);
@@ -116,7 +138,7 @@ void setup() {
 //OLED DISPLAY
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println(F("SSD1306 allocation failed"));
-    for(;;); // Don't proceed, loop forever
+    
   }
     display.clearDisplay();
     display.display();
@@ -126,13 +148,16 @@ void setup() {
     display.setTextSize(2);             // Normal 1:1 pixel scale
     display.setTextColor(SSD1306_WHITE);        // Draw white text
     display.setCursor(0,5);  
-
     display.printf("SETTING UP");
-    display.setTextSize(1);             // Normal 1:1 pixel scale
-    display.setTextColor(SSD1306_WHITE);        // Draw white text
-    display.setCursor(0,15);  
-    display.printf("O\n   O\n     O");
     display.display();
+    delay(1000);
+    
+    testdrawbitmap();
+    
+        
+
+
+    
   
 //Light Sensor
  pinMode(LIGHTDIODE, INPUT);
@@ -449,4 +474,17 @@ void Rainbow(){
       delay(10);
   }
  }
+}
+
+
+
+void testdrawbitmap(void) {
+  display.clearDisplay();
+
+  display.drawBitmap(
+    (display.width()  - LOGO_WIDTH ) / 2,
+    (display.height() - LOGO_HEIGHT) / 2,
+    logo_bmp, LOGO_WIDTH, LOGO_HEIGHT, 1);
+  display.display();
+  delay(1000);
 }
