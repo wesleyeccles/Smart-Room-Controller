@@ -1,5 +1,5 @@
 #include <SPI.h>
-#include <Ethernet.h>
+//#include <Ethernet.h>
 #include <mac.h>
 #include  <Encoder.h>
 #include  <OneButton.h>
@@ -23,7 +23,7 @@
 int   hueRedGreenBlue[]= {HueRed , HueRed, HueYellow,HueGreen,HueGreen};
 
 //Ethernet 
-  bool status;
+  //bool status;
 
 // RANGE
   enum  State {
@@ -119,22 +119,22 @@ void setup() {
   button1.setClickTicks (250) ;
   button1.setPressTicks (2000) ;
   
-//Ethernet Connection
-  status = Ethernet.begin(mac);
-  if (!status) {
-    Serial.printf("failed to configure Ethernet using DHCP \n");
-    //no point in continueing 
-   //while(1);
-    }
-  //print your local IP address
-  Serial.print("My IP address:");
-  for (byte thisbyte = 0; thisbyte < 4; thisbyte++) {
-    //print value of each byte of the IP address
-    Serial.print(Ethernet.localIP()[thisbyte], DEC);
-    if (thisbyte < 3) Serial.print(".");
-    }
-  Serial.println();
-
+////Ethernet Connection
+//  status = Ethernet.begin(mac);
+//  if (!status) {
+//    Serial.printf("failed to configure Ethernet using DHCP \n");
+//    //no point in continueing 
+//   //while(1);
+//    }
+//  //print your local IP address
+//  Serial.print("My IP address:");
+//  for (byte thisbyte = 0; thisbyte < 4; thisbyte++) {
+//    //print value of each byte of the IP address
+//    Serial.print(Ethernet.localIP()[thisbyte], DEC);
+//    if (thisbyte < 3) Serial.print(".");
+//    }
+//  Serial.println();
+//
 //OLED DISPLAY
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println(F("SSD1306 allocation failed"));
@@ -187,8 +187,8 @@ void setup() {
   PrintBallCountToOLED(ballCount, Mode);
 
 //TIMER
-    switchOFF(1); //TURNS OFF WEMO FAN
-    switchOFF(2); //TURNS OFF WEMO FAN 
+   // switchOFF(1); //TURNS OFF WEMO FAN
+   // switchOFF(2); //TURNS OFF WEMO FAN 
     fanIsRunning=false;                  
 }
 
@@ -202,8 +202,8 @@ void loop() {
 
   
   if (isTimerReady()){                            //Check the timer to see if its done to turn off fans 
-    switchOFF(1); //TURNS OFF WEMO FAN
-    switchOFF(2); //TURNS OFF WEMO FAN 
+    //switchOFF(1); //TURNS OFF WEMO FAN
+    //switchOFF(2); //TURNS OFF WEMO FAN 
     fanIsRunning=false;   
   }
   
@@ -213,9 +213,9 @@ void loop() {
   if (CompareToThreshhold(PinAve, LIGHTDIODE)){ //Check the current average against the threshhold for TRUE 
     
     for (int k=1; k<=5; k++){                         //Turn ON and OFF hue lights Red > Yellow> Green 
-        setHue(k,true,hueRedGreenBlue[k-1],255,255);
-        delay (50);
-        setHue(k,false,hueRedGreenBlue[k-1],0,0);
+      //  setHue(k,true,hueRedGreenBlue[k-1],255,255);
+       // delay (50);
+      //  setHue(k,false,hueRedGreenBlue[k-1],0,0);
           Serial.println ("Lights turning off");
      }
      
@@ -284,8 +284,8 @@ void loop() {
 
                if (!fanIsRunning){
                  timerStart=millis();
-                 switchON(1); //TURNS ON WEMO FAN
-                 switchON(2); //TURNS ON WEMO FAN 
+              //   switchON(1); //TURNS ON WEMO FAN
+               //  switchON(2); //TURNS ON WEMO FAN 
                  fanIsRunning=true;  
                 display.setTextSize(1);             // Normal 1:1 pixel scale
                 display.setTextColor(SSD1306_WHITE);        // Draw white text
