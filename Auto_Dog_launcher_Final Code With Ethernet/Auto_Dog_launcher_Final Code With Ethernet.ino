@@ -214,7 +214,7 @@ void loop() {
     
     for (int k=1; k<=5; k++){                         //Turn ON and OFF hue lights Red > Yellow> Green 
         setHue(k,true,hueRedGreenBlue[k-1],255,255);
-        delay (50);
+        delay (75);
         setHue(k,false,hueRedGreenBlue[k-1],0,0);
           Serial.println ("Lights turning off");
      }
